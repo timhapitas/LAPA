@@ -1,0 +1,70 @@
+region_size = 100;
+
+BCleft = 1;
+BCright = 0;
+
+iterations = 1000;
+
+potential = zeros(region_size, region_size);
+
+figure;
+
+for it = 1:iterations
+
+for i = 1:region_size
+    
+    for j = 1:region_size
+        
+        if (i == 1 && j ~= 1 && j ~= region_size)
+            
+           potential(i, j) = (potential(i + 1, j) + potential(i, j - 1) + potential(i, j + 1) + BCleft)/4;
+        
+        elseif (i == 1 && j == 1)
+            
+           potential(i, j) = (potential(i + 1, j) + potential(i, j + 1) + BCleft)/3;
+           
+        elseif (i == 1 && j == region_size)
+            
+           potential(i, j) = (potential(i + 1, j) + potential(i, j - 1) + BCleft)/3; 
+           
+        elseif(i == region_size && j ~= 1 && j ~= region_size)
+            
+           potential(i, j) = (potential(i - 1, j) + potential(i, j - 1) + potential(i, j + 1) + 0)/4;
+           
+        elseif(i == region_size && j == 1)
+            
+           potential(i, j) = (potential(i - 1, j) + potential(i, j + 1) + 0)/4;
+           
+        elseif(i == region_size && j == region_size)
+            
+           potential(i, j) = (potential(i - 1, j) + potential(i, j - 1) + 0)/4;
+           
+        elseif(j == 1 && i ~= 1 && i ~= region_size)
+            
+           potential(i, j) = (potential(i + 1, j) + potential(i - 1, j) + potential(i, j + 1))/3;
+           
+        elseif(j == region_size && i ~= 1 && i ~= region_size)
+            
+           potential(i, j) = (potential(i + 1, j) + potential(i - 1, j) + potential(i, j - 1))/3;
+           
+        else
+            
+           potential(i, j) = (potential(i + 1, j) + potential(i - 1, j) + potential(i, j - 1) + potential(i, j + 1))/4;
+            
+        end
+        
+    end
+    
+end
+
+
+surf(potential);
+pause(0.001);
+
+end
+
+
+
+
+
+
